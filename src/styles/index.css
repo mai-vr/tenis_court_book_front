@@ -41,12 +41,12 @@ body {
 
 @font-face {
   font-family: 'Barlow Condensed';
-  src: url('public/fonts/BarlowCondensed-Bold.ttf');
+  src: url('/fonts/BarlowCondensed-Bold.ttf');
   font-weight: 600;
 }
 
 @font-face {
   font-family: 'DMSans';
-  src: url('public/fonts/DMSans_18pt-Regular.ttf');
+  src: url('/fonts/DMSans_18pt-Regular.ttf');
   font-weight: 400;
 }

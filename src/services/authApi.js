@@ -12,11 +12,15 @@ const registerUser = async (newUserData) => {
 
         const data = await response.json()
 
+        if (!response.ok) {
+            throw data
+        }
+
         return data
 
     } catch (error) {
-        console.log(error)
-        return error.message
+        console.log(error.message)
+        throw error
     }
 }
 
@@ -31,12 +35,15 @@ const loginUser = async (userData) => {
         })
 
         const data = await response.json()
+        if (!response.ok) {
+            throw data
+        }
 
         return data
 
     } catch (error) {
         console.log(error)
-        return error.message
+        throw error
     }
 }
 

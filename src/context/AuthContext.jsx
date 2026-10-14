@@ -17,30 +17,44 @@ const AuthProvider = ({children}) => {
 
         if (storedToken && storedUser) {
             setToken(storedToken)
-            // const decodedData = jwtDecode(storedToken) // Decodes the JWT to retrieve user info.
+           
             setUser(JSON.parse(storedUser))
         }
         setIsAuthLoading(false)
     }, [])
 
     const handleLogin = async (userData) => {
-        const data = await loginUser(userData)
-        setToken(data.token)
-        setUser(data.user)
+        try {
+            const data = await loginUser(userData)
+            if (data && data.token) {
+                setToken(data.token)
+                setUser(data.user)
+                localStorage.setItem(STORED_TOKEN, data.token)
+                localStorage.setItem(STORED_USER, JSON.stringify(data.user))
+            }
 
-        localStorage.setItem(STORED_TOKEN, data.token)
-        localStorage.setItem(STORED_USER, JSON.stringify(data.user))
-        return data
+            return data
+
+        } catch (error) {
+            throw error
+        }
     }
 
     const handleRegister = async (newUserData) => {
-        const data = await registerUser(newUserData)
-        setToken(data.token)
-        setUser(data.user)
+        try {
+            const data = await registerUser(newUserData)
+            if (data && data.token) {           
+                setToken(data.token)
+                setUser(data.user)
 
-        localStorage.setItem(STORED_TOKEN, data.token)
-        localStorage.setItem(STORED_USER, JSON.stringify(data.user))
-        return data
+                localStorage.setItem(STORED_TOKEN, data.token)
+                localStorage.setItem(STORED_USER, JSON.stringify(data.user))  
+            }
+            return data
+
+        } catch (error) {
+            throw error
+        }
     }
 
     const handleLogout = () => {
