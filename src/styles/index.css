@@ -1,0 +1,52 @@
+:root {
+  --primary-color: #12372a;    
+  --primary-dark: #0b261c;
+  --secondary-color: #b4572f;   
+  --accent-color: #d8e64c;   
+    --surface: #f6f5ef;       
+  --surface-raised: #ffffff;
+  --surface-sunken: #ebeae1;
+  --line: #d9d8cc;
+
+    --font-color: #15201b;
+  --font-color-muted: #5b6760;
+  --font-color-light: #f6f5ef;
+ 
+  --success: #2f7d4f;
+  --danger: #a8372a;
+
+  --font-heading: "Barlow Condensed", sans-serif;
+  --font-body: "DMSans", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: clamp(16px, 1vmax, 24px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--font-color);
+  background-color: var(--surface);
+}
+
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('public/fonts/BarlowCondensed-Bold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'DMSans';
+  src: url('public/fonts/DMSans_18pt-Regular.ttf');
+  font-weight: 400;
+}
