@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 const Register = () => {
     const [userInput, setUserInput] = useState({})
     const [isSuccess, setIsSuccess] = useState(null)
-    const {handleRegister, user} = useContext(AuthContext)
+    const {handleRegister} = useContext(AuthContext)
     const navigate = useNavigate()
 
     const handleChangeRegister = (e) => {
