@@ -1,0 +1,25 @@
+.clubs {
+  margin: 0 auto;
+  padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 8vw, 8rem);
+}
+
+.clubs__title {
+  margin-bottom: 0.5rem;
+}
+
+.clubs__subtitle {
+  margin-bottom: 2.5rem;
+  font-size: 1.1em;
+  color: var(--font-color-muted);
+}
+
+@media (max-width: 640px) {
+  .clubs {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .clubs__subtitle {
+    margin-bottom: 1.5rem;
+  }
+}

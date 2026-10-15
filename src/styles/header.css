@@ -5,7 +5,7 @@
   min-height: 4.25rem;
   padding: 0 clamp(1.5rem, 4vw, 3rem);
   background-color: var(--primary-dark);
-  border-bottom: 3px solid var(--surface);
+  border-bottom: 3px solid var(--line);
 }
 
 .header__nav {

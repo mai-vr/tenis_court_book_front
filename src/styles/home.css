@@ -1,8 +1,6 @@
 .home {
-  --home-height: calc(100vh - var(--navbar-height, 0px));
-
+  height: 100vh;
   position: relative;
-  isolation: isolate;
   overflow: hidden;
   min-height: var(--home-height);
   display: flex;
