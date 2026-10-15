@@ -1,17 +1,17 @@
 :root {
-  --primary-color: #12372a;    
+  --primary-color: #12372a;
   --primary-dark: #0b261c;
-  --secondary-color: #b4572f;   
-  --accent-color: #d8e64c;   
-    --surface: #f6f5ef;       
+  --secondary-color: #b4572f;
+  --accent-color: #d8e64c;
+  --surface: #f6f5ef;
   --surface-raised: #ffffff;
   --surface-sunken: #ebeae1;
   --line: #d9d8cc;
 
-    --font-color: #15201b;
+  --font-color: #15201b;
   --font-color-muted: #5b6760;
   --font-color-light: #f6f5ef;
- 
+
   --success: #2f7d4f;
   --danger: #a8372a;
 
@@ -20,13 +20,13 @@
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: clamp(16px, 1vmax, 24px);
+  font-size: clamp(16px, 1vmax, 24px);
 }
 
 body {
@@ -38,15 +38,39 @@ body {
   background-color: var(--surface);
 }
 
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--primary-color);
+}
+
+h1 {
+  font-size: 3.5em;
+}
+h2 {
+  font-size: 2.5em;
+}
+h3 {
+  font-size: 1.75em;
+}
+h4 {
+  font-size: 1.25em;
+}
 
 @font-face {
-  font-family: 'Barlow Condensed';
-  src: url('/fonts/BarlowCondensed-Bold.ttf');
+  font-family: "Barlow Condensed";
+  src: url("/fonts/BarlowCondensed-Bold.ttf");
   font-weight: 600;
 }
 
 @font-face {
-  font-family: 'DMSans';
-  src: url('/fonts/DMSans_18pt-Regular.ttf');
+  font-family: "DMSans";
+  src: url("/fonts/DMSans_18pt-Regular.ttf");
   font-weight: 400;
 }
