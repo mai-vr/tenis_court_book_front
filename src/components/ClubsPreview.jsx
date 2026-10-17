@@ -19,6 +19,7 @@ const ClubsPreview = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getClubs();
@@ -32,9 +33,6 @@ const ClubsPreview = () => {
       getReservationsOneClub(club.id);
     });
   }, [dateInput, clubs]);
-
-  console.log("Canchas por club:", courtsByClub);
-  console.log("Reservas por club:", reservationsByClub);
 
   const filteredClubs = clubs?.filter((club) => {
     const matchesName = club.name
@@ -55,6 +53,23 @@ const ClubsPreview = () => {
     navigate(`/clubs/${id}`);
   };
 
+  const handleChangeDate = (e) => {
+    const date = e.target.value;
+
+    const tzOffset = new Date().getTimezoneOffset() * 60000;
+    const currentDate = new Date(Date.now() - tzOffset)
+      .toISOString()
+      .split("T")[0];
+
+    if (date < currentDate) {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+    setDateInput(date);
+  };
+
   return (
     <section className="clubspreview">
       <form
@@ -66,7 +81,7 @@ const ClubsPreview = () => {
           name="date-search"
           placeholder="Enter a date"
           value={dateInput}
-          onChange={(e) => setDateInput(e.target.value)}
+          onChange={handleChangeDate}
         />
         <input
           type="text"
@@ -90,6 +105,7 @@ const ClubsPreview = () => {
           ))}
         </select>
       </form>
+      {error && <p className="clubs__error">Something gone wrong</p>}
 
       {filteredClubs?.length > 0 ? (
         filteredClubs.map((club) => (

@@ -59,9 +59,19 @@
   box-shadow: 0 0 0 3px rgba(216, 230, 76, 0.6);
 }
 
+.clubs__error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--font-color-light);
+  background-color: var(--danger);
+  border-radius: 0.25rem;
+}
+
 .clubspreview > p {
   grid-column: 1 / -1;
-  color: var(--font-color-muted);
+  /* color: var(--font-color-muted); */
 }
 
 .clubspreview__card {
