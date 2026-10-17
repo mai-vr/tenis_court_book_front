@@ -1,9 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { ClubsContext } from "../context/ClubsContext";
 import "../styles/clubs-preview.css";
+import { useNavigate } from "react-router-dom";
 
 const ClubsPreview = () => {
-  const { clubs, getClubs } = useContext(ClubsContext);
+  const {
+    clubs,
+    getClubs,
+    dateInput,
+    setDateInput,
+    getReservations,
+    reservationsByClub,
+    getCourts,
+    courtsByClub,
+    getReservationsOneClub,
+  } = useContext(ClubsContext);
+  const navigate = useNavigate();
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -11,6 +23,18 @@ const ClubsPreview = () => {
   useEffect(() => {
     getClubs();
   }, []);
+
+  useEffect(() => {
+    if (!dateInput || !clubs?.length) return;
+
+    clubs.forEach((club) => {
+      getCourts(club.id);
+      getReservationsOneClub(club.id);
+    });
+  }, [dateInput, clubs]);
+
+  console.log("Canchas por club:", courtsByClub);
+  console.log("Reservas por club:", reservationsByClub);
 
   const filteredClubs = clubs?.filter((club) => {
     const matchesName = club.name
@@ -27,12 +51,23 @@ const ClubsPreview = () => {
     ...new Set(clubs?.map((club) => club.location.city) || []),
   ].sort();
 
+  const handleClickClub = (id) => {
+    navigate(`/clubs/${id}`);
+  };
+
   return (
     <section className="clubspreview">
       <form
         className="clubspreview__filter"
         onSubmit={(e) => e.preventDefault()}
       >
+        <input
+          type="date"
+          name="date-search"
+          placeholder="Enter a date"
+          value={dateInput}
+          onChange={(e) => setDateInput(e.target.value)}
+        />
         <input
           type="text"
           name="clubs-search"
@@ -58,7 +93,11 @@ const ClubsPreview = () => {
 
       {filteredClubs?.length > 0 ? (
         filteredClubs.map((club) => (
-          <div className="clubspreview__card" key={club.id}>
+          <div
+            className="clubspreview__card"
+            key={club.id}
+            onClick={() => handleClickClub(club.id)}
+          >
             <img
               src={club.logo_url}
               alt={`Logo of ${club.name}`}

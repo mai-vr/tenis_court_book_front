@@ -4,6 +4,7 @@ import { Home } from "../views/Home";
 import { Register } from "../views/Register";
 import { Login } from "../views/Login";
 import { Clubs } from "../views/Clubs";
+import { OneClub } from "../views/OneClub";
 
 const RouterApp = () => {
   return (
@@ -13,6 +14,7 @@ const RouterApp = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/clubs" element={<Clubs />} />
+        <Route path="/clubs/:id" element={<OneClub />} />
       </Routes>
     </BrowserRouter>
   );

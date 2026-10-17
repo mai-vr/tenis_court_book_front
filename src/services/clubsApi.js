@@ -53,11 +53,12 @@ const courtsOfOneClub = async (clubId) => {
 
 const reservation = async (clubId, reservationData) => {
   try {
+    const token = localStorage.getItem(TOKEN);
     const response = await fetch(`${API_URL}/clubs/${clubId}/reservations`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(reservationData),
     });
@@ -74,4 +75,32 @@ const reservation = async (clubId, reservationData) => {
   }
 };
 
-export { getAllClubs, getOneClub, courtsOfOneClub, reservation };
+const reservationsOfOneClub = async (clubId) => {
+  try {
+    const token = localStorage.getItem(TOKEN);
+
+    const response = await fetch(`${API_URL}/clubs/${clubId}/reservations`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw data;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export {
+  getAllClubs,
+  getOneClub,
+  courtsOfOneClub,
+  reservation,
+  reservationsOfOneClub,
+};

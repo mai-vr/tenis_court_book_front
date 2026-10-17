@@ -1,0 +1,204 @@
+.oneclub {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem clamp(1.5rem, 4vw, 3rem) 5rem;
+}
+
+.oneclub__logo {
+  padding: 1.5rem;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--secondary-color);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.oneclub__logo img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.oneclub__title {
+  margin-bottom: 0.5rem;
+}
+
+.oneclub__subtitle {
+  margin-bottom: 1.5rem;
+  color: var(--font-color-muted);
+}
+
+.oneclub__description {
+  margin-bottom: 2rem;
+}
+
+.oneclub__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  font-size: 1rem;
+  color: var(--font-color-muted);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.oneclub__contact p {
+  margin: 0;
+}
+
+.oneclub__book__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+  padding: 0.5rem 2.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  color: var(--accent-color);
+  background-color: var(--primary-color);
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.oneclub__book__btn:hover {
+  color: var(--primary-dark);
+  background-color: var(--accent-color);
+}
+
+.oneclub__book__btn:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+.oneclub__book__btn:active {
+  transform: translateY(1px);
+}
+
+.oneclub__subtitle__courts,
+.oneclub__subtitle__map {
+  margin-bottom: 0.25rem;
+  font-size: 2rem;
+}
+
+.oneclub__info__courts,
+.oneclub__info__map {
+  margin-bottom: 1.5rem;
+  color: var(--font-color-muted);
+}
+
+.oneclub__courts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 3.5rem;
+}
+
+.oneclub__onecourt {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr) 6rem 7.5rem 8rem;
+  align-items: center;
+  column-gap: 1.5rem;
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--primary-color);
+  border-radius: 1rem;
+}
+
+.oneclub__onecourt__title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.oneclub__onecourt__material {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--font-color-muted);
+}
+
+.oneclub__onecourt__indoor,
+.oneclub__onecourt__status {
+  justify-self: start;
+  margin: 0;
+  padding: 0.15rem 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: 10rem;
+}
+
+.oneclub__onecourt__indoor {
+  color: var(--primary-color);
+  background-color: var(--surface-sunken);
+}
+
+.oneclub__onecourt__status {
+  text-transform: capitalize;
+  color: var(--primary-dark);
+  background-color: var(--accent-color);
+}
+
+.oneclub__onecourt__price {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--primary-color);
+}
+
+.oneclub__map iframe {
+  display: block;
+  width: 100%;
+  height: 26rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+@media (max-width: 800px) {
+  .oneclub {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .oneclub__logo {
+    width: 10rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .oneclub__onecourt {
+    grid-template-columns: auto auto 1fr;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+  }
+
+  .oneclub__onecourt__title,
+  .oneclub__onecourt__material {
+    grid-column: 1 / -1;
+  }
+
+  .oneclub__map iframe {
+    height: 20rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oneclub__book__btn {
+    transition: none;
+  }
+}
