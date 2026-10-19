@@ -51,6 +51,7 @@ const ClubsProvider = ({ children }) => {
           [id]: data,
         }));
       }
+      console.log("canchas: ", data);
     } catch (error) {
       console.log(error);
     }

@@ -64,6 +64,16 @@ h4 {
   font-size: 1.25em;
 }
 
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.layout__main {
+  flex: 1;
+}
+
 @font-face {
   font-family: "Barlow Condensed";
   src: url("/fonts/BarlowCondensed-Bold.ttf");

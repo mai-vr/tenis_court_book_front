@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  background-color: var(--primary-dark);
+  border-top: 3px solid var(--line);
+}
+
+.footer__info {
+  margin: 0 auto;
+  font-size: 1rem;
+  text-align: center;
+  color: rgba(246, 245, 239, 0.7);
+}

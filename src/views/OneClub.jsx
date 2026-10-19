@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import { ClubsContext } from "../context/ClubsContext";
 import { useParams } from "react-router-dom";
-import { Header } from "../components/Header";
 import "../styles/one-club.css";
 
 const OneClub = () => {
@@ -20,7 +19,6 @@ const OneClub = () => {
 
   return (
     <>
-      <Header />
       <section className="oneclub">
         <div className="oneclub__logo">
           <img

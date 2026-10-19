@@ -5,16 +5,20 @@ import { Register } from "../views/Register";
 import { Login } from "../views/Login";
 import { Clubs } from "../views/Clubs";
 import { OneClub } from "../views/OneClub";
+import { Layout } from "../components/Layout";
 
 const RouterApp = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/clubs" element={<Clubs />} />
-        <Route path="/clubs/:id" element={<OneClub />} />
+
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/clubs" element={<Clubs />} />
+          <Route path="/clubs/:id" element={<OneClub />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

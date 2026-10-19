@@ -26,13 +26,12 @@ const ClubsPreview = () => {
   }, []);
 
   useEffect(() => {
-    if (!dateInput || !clubs?.length) return;
+    if (!clubs?.length) return;
 
     clubs.forEach((club) => {
       getCourts(club.id);
-      getReservationsOneClub(club.id);
     });
-  }, [dateInput, clubs]);
+  }, [clubs]);
 
   const filteredClubs = clubs?.filter((club) => {
     const matchesName = club.name
@@ -42,7 +41,31 @@ const ClubsPreview = () => {
     const matchesCity =
       selectedCity === "" || club.location.city === selectedCity;
 
-    return matchesName && matchesCity;
+    if (!dateInput) return matchesName && matchesCity;
+
+    const selectedDate = new Date(`${dateInput}T12:00:00`);
+    const daysOfWeek = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ];
+
+    const selectedDay = daysOfWeek[selectedDate.getDay()];
+    const matchesSchedule = club.schedules?.some(
+      (schedule) => schedule.day_week === selectedDay,
+    );
+
+    const clubCourts = courtsByClub[club.id] || [];
+
+    const hasAvailableCourt = clubCourts.some(
+      (court) => court.status === "available",
+    );
+
+    return matchesName && matchesCity && matchesSchedule && hasAvailableCourt;
   });
 
   const cities = [

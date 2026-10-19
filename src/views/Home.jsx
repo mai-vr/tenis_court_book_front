@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { ClubsContext } from "../context/ClubsContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
-import { Header } from "../components/Header";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const Home = () => {
 
   return (
     <>
-      <Header />
       <section className="home">
         <h1 className="home__title">Tenis courts</h1>
         <p className="home__subtitle">Today is a nice day to play</p>
