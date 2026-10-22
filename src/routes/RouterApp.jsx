@@ -6,6 +6,7 @@ import { Login } from "../views/Login";
 import { Clubs } from "../views/Clubs";
 import { OneClub } from "../views/OneClub";
 import { Layout } from "../components/Layout";
+import { Reservation } from "../views/Reservation";
 
 const RouterApp = () => {
   return (
@@ -18,6 +19,14 @@ const RouterApp = () => {
           <Route path="/" element={<Home />} />
           <Route path="/clubs" element={<Clubs />} />
           <Route path="/clubs/:id" element={<OneClub />} />
+          <Route
+            path="/clubs/:id/reservation"
+            element={
+              <PrivateRoute>
+                <Reservation />
+              </PrivateRoute>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

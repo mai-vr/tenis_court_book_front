@@ -4,13 +4,14 @@ import { useParams } from "react-router-dom";
 import "../styles/one-club.css";
 
 const OneClub = () => {
-  const { getAClub, selectedClub, getCourts, courts } =
+  const { getAClub, selectedClub, getCourts, courts, getReservationsOneClub } =
     useContext(ClubsContext);
   const { id } = useParams();
 
   useEffect(() => {
     getAClub(id);
     getCourts(id);
+    getReservationsOneClub(id);
   }, [id]);
 
   if (!selectedClub || !selectedClub.location) {
@@ -37,7 +38,10 @@ const OneClub = () => {
             <p>Phone: {selectedClub.phone ? selectedClub.phone : "No phone"}</p>
             <p>Email: {selectedClub.email ? selectedClub.email : "No email"}</p>
           </div>
-          <a href="/reservations" className="oneclub__book__btn">
+          <a
+            href={`/clubs/${selectedClub.id}/reservation`}
+            className="oneclub__book__btn"
+          >
             Book
           </a>
           <h2 className="oneclub__subtitle__courts">Courts</h2>

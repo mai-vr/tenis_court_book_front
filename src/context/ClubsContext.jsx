@@ -9,7 +9,9 @@ import {
 const ClubsContext = createContext();
 
 const ClubsProvider = ({ children }) => {
-  const [dateInput, setDateInput] = useState(null);
+  const [dateInput, setDateInput] = useState(
+    new Date().toISOString().split("T")[0],
+  );
   const [clubs, setClubs] = useState([]); // An array with all the clubs to show.
   const [selectedClub, setSelectedClub] = useState({});
   const [courts, setCourts] = useState([]); // All the courts from one club selected.
@@ -33,7 +35,7 @@ const ClubsProvider = ({ children }) => {
       const data = await getOneClub(id);
       if (data) {
         setSelectedClub(data);
-        console.log(selectedClub);
+        console.log(data);
       }
     } catch (error) {
       console.log(error);
@@ -59,12 +61,14 @@ const ClubsProvider = ({ children }) => {
 
   const getReservationsOneClub = async (clubId) => {
     try {
+      console.log("Consultando reservas");
       const data = await reservationsOfOneClub(clubId);
       if (data) {
         setReservationsByClub((prev) => ({
           ...prev,
           [clubId]: data,
         }));
+        console.log("Reservas:", data[0]);
       }
     } catch (error) {
       console.log(error);
