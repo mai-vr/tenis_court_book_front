@@ -1,3 +1,5 @@
+import { authenticatedFetch } from "./api.js";
+
 const API_URL = "https://tenis-court-book.onrender.com/api/v1";
 const TOKEN = "authToken";
 
@@ -54,14 +56,16 @@ const courtsOfOneClub = async (clubId) => {
 const reservation = async (clubId, reservationData) => {
   try {
     const token = localStorage.getItem(TOKEN);
-    const response = await fetch(`${API_URL}/clubs/${clubId}/reservations`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await authenticatedFetch(
+      `${API_URL}/clubs/${clubId}/reservations`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservationData),
       },
-      body: JSON.stringify(reservationData),
-    });
+    );
     const data = await response.json();
 
     if (!response.ok) {
@@ -79,12 +83,12 @@ const reservationsOfOneClub = async (clubId) => {
   try {
     const token = localStorage.getItem(TOKEN);
 
-    const response = await fetch(`${API_URL}/clubs/${clubId}/reservations`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await authenticatedFetch(
+      `${API_URL}/clubs/${clubId}/reservations`,
+      {
+        method: "GET",
       },
-    });
+    );
 
     const data = await response.json();
 
