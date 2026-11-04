@@ -82,9 +82,6 @@ const AvailableSlots = ({ onSelectSlot }) => {
     // Find the date in the 'schedules' atribute of clubs from DB.
     const selectedSchedule = schedules.find((s) => s.day_week === selectedDay);
 
-    console.log("FECHA SELECCIONADA:", dateInput);
-    console.log("HORARIOS DEL CLUB:", schedules);
-    console.log("HORARIO DEL DÍA:", selectedSchedule);
     if (!selectedSchedule) {
       setSlots([]);
       setNotSlots(true);
@@ -110,10 +107,7 @@ const AvailableSlots = ({ onSelectSlot }) => {
 
     let current = getMinutes(selectedSchedule.start_time);
     const end = getMinutes(selectedSchedule.end_time);
-    console.log("INICIO EN MINUTOS:", current);
-    console.log("FIN EN MINUTOS:", end);
-    console.log("CANCHAS DEL CLUB:", clubsCourts);
-    console.log("CANTIDAD DE CANCHAS:", clubsCourts.length);
+
     while (current + 60 <= end) {
       const startTime = formatMinutes(current);
       const endTime = formatMinutes(current + 60);
@@ -136,9 +130,7 @@ const AvailableSlots = ({ onSelectSlot }) => {
 
           return !hasReservation;
         });
-      console.log("BLOQUES GENERADOS:", clubSlots);
-      console.log("CANTIDAD DE BLOQUES:", clubSlots.length);
-      console.log("RESERVAS RECIBIDAS:", clubsReservations);
+
       clubSlots.push({
         date: dateInput,
         day_week: selectedDay,

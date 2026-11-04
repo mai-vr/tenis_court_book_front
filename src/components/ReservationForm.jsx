@@ -2,7 +2,9 @@ const ReservationForm = ({ selectedSlot, onBack, onConfirm, loading }) => {
   return (
     <section className="reservationform">
       <div className="reservationform__back">
-        <button className="reservationform__btn__back">Back</button>
+        <button onClick={onBack} className="reservationform__btn__back">
+          Back
+        </button>
       </div>
       <div className="reservationform__courts">
         {selectedSlot.available_courts.map((c) => (

@@ -80,18 +80,23 @@ export const Reservation = () => {
 
   return (
     <div className="reservation">
-      <h1 className="reservation__title">Book your Court</h1>
+      {step === "slots" && (
+        <>
+          <h1 className="reservation__title">Book your Court</h1>
 
-      <div className="reservation__datefilter__container">
-        <label htmlFor="reservation__date">Select date:</label>
-        <input
-          className="reservation__input"
-          id="reservation-date"
-          type="date"
-          value={dateInput || ""}
-          onChange={(e) => setDateInput(e.target.value)}
-        />
-      </div>
+          <div className="reservation__datefilter__container">
+            <label htmlFor="reservation-date">Select date:</label>
+
+            <input
+              className="reservation__input"
+              id="reservation-date"
+              type="date"
+              value={dateInput || ""}
+              onChange={(e) => setDateInput(e.target.value)}
+            />
+          </div>
+        </>
+      )}
 
       {errorMsg && <div className="error-banner">{errorMsg}</div>}
 
