@@ -1,0 +1,199 @@
+.user__profile {
+  /* max-width: 72rem; */
+  margin: 0 auto;
+  /* padding: 3rem 1.5rem 4rem; */
+  padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 8vw, 8rem);
+}
+
+.user__profile__header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.user__profile__title {
+  margin-bottom: 0.5rem;
+}
+
+.user__profile__subtitle {
+  color: var(--font-color-muted);
+  font-size: 1.1rem;
+}
+
+.user__reservations__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 3rem;
+}
+
+.user__reservation__message {
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  color: var(--font-color-muted);
+}
+
+.user__reservation__message--error {
+  background: var(--surface-sunken);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.user__reservation__card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.user__reservation__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(18, 55, 42, 0.12);
+}
+
+.user__reservation__title {
+  margin-bottom: 0.25rem;
+}
+
+.user__reservation__subtitle {
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+.user__reservation__info {
+  flex: 1;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem;
+  color: var(--font-color-muted);
+}
+
+.user__reservation__price {
+  margin: 0.5rem 0 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--primary-color);
+}
+
+.user__reservation__status {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 20rem;
+  background: var(--surface-sunken);
+  color: var(--font-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.user__reservation__status--confirmed,
+.user__reservation__status--paid,
+.user__reservation__status--active {
+  background: #e3f1e8;
+  color: var(--success);
+}
+
+.user__reservation__status--cancelled,
+.user__reservation__status--canceled {
+  background: #fbeceb;
+  color: var(--danger);
+}
+
+.user__reservation__btn {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: 1.5px solid var(--danger);
+  border-radius: 8px;
+  color: var(--danger);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.user__reservation__btn:hover {
+  background: var(--danger);
+  color: var(--font-color-light);
+}
+
+.modal__overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(11, 38, 28, 0.6);
+  z-index: 1000;
+}
+
+.modal {
+  width: 100%;
+  max-width: 26rem;
+  padding: 1.75rem;
+  background: var(--surface-raised);
+  border-radius: 12px;
+  border-top: 4px solid var(--danger);
+  box-shadow: 0 16px 40px rgba(11, 38, 28, 0.25);
+}
+
+.modal__title {
+  margin-bottom: 0.5rem;
+}
+
+.modal__text {
+  margin-bottom: 1.5rem;
+  color: var(--font-color-muted);
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.modal__btn {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+.modal__btn:hover {
+  filter: brightness(0.95);
+}
+
+.modal__btn--secondary {
+  background: var(--surface-sunken);
+  color: var(--font-color);
+}
+
+.modal__btn--danger {
+  background: var(--danger);
+  color: var(--font-color-light);
+}

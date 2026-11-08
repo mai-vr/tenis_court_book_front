@@ -2,10 +2,12 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/register.css";
+import { ERRORS } from "../services/errorMessagges";
 
 const Register = () => {
   const [userInput, setUserInput] = useState({});
   const [isSuccess, setIsSuccess] = useState(null);
+  const [error, setError] = useState("");
   const { handleRegister } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -29,6 +31,14 @@ const Register = () => {
     } catch (error) {
       console.log(error);
       setIsSuccess(false);
+      if (userInput.password !== userInput.passwordConfirmation) {
+        setError(ERRORS.passwordConfirmation);
+      } else if (
+        userInput.firstName.length < 2 ||
+        userInput.lastName.length < 2
+      ) {
+        setError(ERRORS.nameLength);
+      }
     }
   };
 
@@ -99,8 +109,11 @@ const Register = () => {
         <p className="register__switch">
           <Link to="/login">Log in</Link>
         </p>
-        {isSuccess === false && (
-          <p className="register__error">Some fields are incorrect</p>
+        {isSuccess === false && error && (
+          <div className="register__errors">
+            <p className="register__error">Some fields are incorrect</p>
+            <p className="register__error">{error}</p>
+          </div>
         )}
       </div>
     </section>

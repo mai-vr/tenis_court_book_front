@@ -7,6 +7,7 @@ import { Clubs } from "../views/Clubs";
 import { OneClub } from "../views/OneClub";
 import { Layout } from "../components/Layout";
 import { Reservation } from "../views/Reservation";
+import { UserProfile } from "../views/UsersProfile";
 
 const RouterApp = () => {
   return (
@@ -24,6 +25,14 @@ const RouterApp = () => {
             element={
               <PrivateRoute>
                 <Reservation />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <UserProfile />
               </PrivateRoute>
             }
           />

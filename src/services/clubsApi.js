@@ -101,10 +101,54 @@ const reservationsOfOneClub = async (clubId) => {
   }
 };
 
+const myReservations = async () => {
+  try {
+    const response = await authenticatedFetch(
+      `${API_URL}/users/me/reservations`,
+      {
+        method: "GET",
+      },
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const deleteReservation = async (clubId, reservationId) => {
+  try {
+    const response = await authenticatedFetch(
+      `${API_URL}/clubs/${clubId}/reservations/${reservationId}`,
+      {
+        method: "DELETE",
+      },
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) throw data;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export {
   getAllClubs,
   getOneClub,
   courtsOfOneClub,
   reservation,
   reservationsOfOneClub,
+  myReservations,
+  deleteReservation,
 };

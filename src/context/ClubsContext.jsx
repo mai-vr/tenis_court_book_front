@@ -4,7 +4,10 @@ import {
   getAllClubs,
   getOneClub,
   reservationsOfOneClub,
+  myReservations,
+  deleteReservation,
 } from "../services/clubsApi";
+import { ERRORS } from "../services/errorMessagges";
 
 const ClubsContext = createContext();
 
@@ -17,6 +20,9 @@ const ClubsProvider = ({ children }) => {
   const [courts, setCourts] = useState([]); // All the courts from one club selected.
   const [reservationsByClub, setReservationsByClub] = useState({});
   const [courtsByClub, setCourtsByClub] = useState({});
+  const [userReservation, setUserReservation] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const getClubs = async () => {
     try {
@@ -72,6 +78,32 @@ const ClubsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      setError(ERRORS.getReservations);
+    }
+  };
+
+  const getUserReservation = async () => {
+    try {
+      const data = await myReservations();
+      setUserReservation(data);
+    } catch (error) {
+      console.log(error);
+      setError(ERRORS.getReservations);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteUserReservation = async (clubId, reservationId) => {
+    try {
+      await deleteReservation(clubId, reservationId);
+
+      setUserReservation((prev) =>
+        prev.filter((reservation) => reservation.id !== reservationId),
+      );
+    } catch (error) {
+      console.log(error);
+      setError(ERRORS.deleteReservation);
     }
   };
 
@@ -89,6 +121,11 @@ const ClubsProvider = ({ children }) => {
         reservationsByClub,
         getReservationsOneClub,
         courtsByClub,
+        getUserReservation,
+        userReservation,
+        error,
+        loading,
+        deleteUserReservation,
       }}
     >
       {children}
