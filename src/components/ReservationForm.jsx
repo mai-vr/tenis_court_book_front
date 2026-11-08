@@ -18,10 +18,12 @@ const ReservationForm = ({ selectedSlot, onBack, onConfirm, loading }) => {
               className="reservationform__btn"
               onClick={() => onConfirm(c)}
             >
-              {loading ? "Loading" : "Book this court"}
+              {/* {loading ? "Loading" : "Book this court"} */}
+              Book this court
             </button>
           </div>
         ))}
+        {loading && <p>Loading...</p>}
       </div>
     </section>
   );

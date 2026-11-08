@@ -2,11 +2,12 @@ import { useContext, useState } from "react";
 import { ClubsContext } from "../context/ClubsContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
+import { ERRORS } from "../services/errorMessagges";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { setDateInput } = useContext(ClubsContext);
-  const [error, setError] = useState(false);
+  const { dateInput, setDateInput } = useContext(ClubsContext);
+  const [errorComponent, setErrorComponent] = useState(null);
 
   const handleDateInput = (e) => {
     const date = e.target.value;
@@ -17,11 +18,11 @@ const Home = () => {
       .split("T")[0];
 
     if (date < currentDate) {
-      setError(true);
+      setError(ERRORS.wrongDate);
       return;
     }
 
-    setError(false);
+    // setError(false);
     setDateInput(date);
   };
 
@@ -45,13 +46,14 @@ const Home = () => {
               type="date"
               name="date"
               placeholder="Enter a date..."
+              value={dateInput}
               onChange={handleDateInput}
             />
-            <button disabled={error} className="home__button">
+            <button disabled={errorComponent} className="home__button">
               Search
             </button>
           </form>
-          {error && <p className="home__error">Invalid date</p>}
+          {errorComponent && <p className="home__error">{errorComponent}</p>}
         </div>
       </section>
     </>

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/register.css";
 import { ERRORS } from "../services/errorMessagges";
 
@@ -10,6 +10,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const { handleRegister } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChangeRegister = (e) => {
     const { name, value } = e.target;
@@ -27,7 +28,8 @@ const Register = () => {
         password_confirmation: userInput.passwordConfirmation,
       };
       await handleRegister(userDataInput);
-      navigate("/");
+      // navigate("/");
+      navigate(location.state?.from || "/", { replace: true });
     } catch (error) {
       console.log(error);
       setIsSuccess(false);

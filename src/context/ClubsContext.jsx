@@ -12,19 +12,42 @@ import { ERRORS } from "../services/errorMessagges";
 const ClubsContext = createContext();
 
 const ClubsProvider = ({ children }) => {
-  const [dateInput, setDateInput] = useState(
-    new Date().toISOString().split("T")[0],
-  );
+  const [dateInput, setDateInput] = useState(() => {
+    return (
+      localStorage.getItem("reservationDate") ||
+      new Date().toISOString().split("T")[0]
+    );
+  });
   const [clubs, setClubs] = useState([]); // An array with all the clubs to show.
   const [selectedClub, setSelectedClub] = useState({});
   const [courts, setCourts] = useState([]); // All the courts from one club selected.
   const [reservationsByClub, setReservationsByClub] = useState({});
   const [courtsByClub, setCourtsByClub] = useState({});
   const [userReservation, setUserReservation] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState({
+    clubs: false,
+    selectedClub: false,
+    courts: false,
+    reservations: false,
+    userReservations: false,
+    deletingReservation: false,
+  });
+  const [error, setError] = useState({
+    clubs: null,
+    selectedClub: null,
+    courts: null,
+    reservations: null,
+    userReservations: null,
+    deletingReservation: null,
+  });
+
+  useEffect(() => {
+    localStorage.setItem("reservationDate", dateInput);
+  }, [dateInput]); // When the user changes the date input, it´s updated.
 
   const getClubs = async () => {
+    setLoading((prev) => ({ ...prev, clubs: true }));
+    setError((prev) => ({ ...prev, clubs: null }));
     try {
       const data = await getAllClubs();
       if (data) {
@@ -33,10 +56,15 @@ const ClubsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      setError((prev) => ({ ...prev, clubs: ERRORS.getClubs }));
+    } finally {
+      setLoading((prev) => ({ ...prev, clubs: false }));
     }
   };
 
   const getAClub = async (id) => {
+    setLoading((prev) => ({ ...prev, selectedClub: true }));
+    setError((prev) => ({ ...prev, selectedClub: null }));
     try {
       const data = await getOneClub(id);
       if (data) {
@@ -45,10 +73,16 @@ const ClubsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      setError((prev) => ({ ...prev, selectedClub: ERRORS.getClubs }));
+    } finally {
+      setLoading((prev) => ({ ...prev, selectedClub: false }));
     }
   };
 
   const getCourts = async (id) => {
+    setLoading((prev) => ({ ...prev, courts: true }));
+    setError((prev) => ({ ...prev, courts: null }));
+
     try {
       const data = await courtsOfOneClub(id);
       if (data) {
@@ -62,39 +96,58 @@ const ClubsProvider = ({ children }) => {
       console.log("canchas: ", data);
     } catch (error) {
       console.log(error);
+      setError((prev) => ({ ...prev, courts: ERRORS.getCourts }));
+    } finally {
+      setLoading((prev) => ({ ...prev, courts: false }));
     }
   };
 
   const getReservationsOneClub = async (clubId) => {
+    setLoading((prev) => ({ ...prev, reservations: true }));
+    setError((prev) => ({ ...prev, reservations: null }));
+
     try {
-      console.log("Consultando reservas");
       const data = await reservationsOfOneClub(clubId);
       if (data) {
         setReservationsByClub((prev) => ({
           ...prev,
           [clubId]: data,
         }));
-        console.log("Reservas:", data[0]);
+        // console.log("Reservas:", data[0]);
       }
     } catch (error) {
       console.log(error);
-      setError(ERRORS.getReservations);
+      setError((prev) => ({
+        ...prev,
+        reservations: ERRORS.getReservations,
+      }));
+    } finally {
+      setLoading((prev) => ({ ...prev, reservations: false }));
     }
   };
 
   const getUserReservation = async () => {
+    setLoading((prev) => ({ ...prev, userReservations: true }));
+    setError((prev) => ({ ...prev, userReservations: null }));
+
     try {
       const data = await myReservations();
       setUserReservation(data);
     } catch (error) {
       console.log(error);
-      setError(ERRORS.getReservations);
+      setError((prev) => ({
+        ...prev,
+        userReservations: ERRORS.getReservations,
+      }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, userReservations: false }));
     }
   };
 
   const deleteUserReservation = async (clubId, reservationId) => {
+    setLoading((prev) => ({ ...prev, deletingReservation: true }));
+    setError((prev) => ({ ...prev, deletingReservation: null }));
+
     try {
       await deleteReservation(clubId, reservationId);
 
@@ -103,7 +156,12 @@ const ClubsProvider = ({ children }) => {
       );
     } catch (error) {
       console.log(error);
-      setError(ERRORS.deleteReservation);
+      setError((prev) => ({
+        ...prev,
+        deletingReservation: ERRORS.deleteReservation,
+      }));
+    } finally {
+      setLoading((prev) => ({ ...prev, deletingReservation: false }));
     }
   };
 

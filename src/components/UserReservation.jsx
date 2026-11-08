@@ -32,17 +32,21 @@ const UserReservation = () => {
 
   return (
     <section className="user__reservation">
-      {loading && <p className="user__reservation__message">Loading data...</p>}
-      {error && (
-        <p className="user__reservation__message user__reservation__message--error">
-          {error}
+      {loading.userReservations && (
+        <p className="loading user__reservation__message">Loading data...</p>
+      )}
+      {error.userReservations && (
+        <p className="error user__reservation__message user__reservation__message--error">
+          {error.userReservations}
         </p>
       )}
-      {!loading && !error && userReservation.length === 0 && (
-        <p className="user__reservation__message">
-          You don't have any reservations yet.
-        </p>
-      )}
+      {!loading.userReservations &&
+        !error.userReservations &&
+        userReservation.length === 0 && (
+          <p className="user__reservation__message">
+            You don't have any reservations yet.
+          </p>
+        )}
 
       <div className="user__reservations__list">
         {userReservation.map((r) => (

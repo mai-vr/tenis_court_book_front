@@ -5,6 +5,9 @@ const ERRORS = {
   reservationDate: "The date entered must be later than today",
   getReservations: "Reservations are not available now",
   deleteReservation: "Could not cancel this reservation",
+  getClubs: "There are not avaible clubs right now",
+  getCourts: "There are not available courts right now",
+  wrongDate: "Date can´t be in the past",
 };
 
 export { ERRORS };

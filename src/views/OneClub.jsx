@@ -4,8 +4,15 @@ import { useParams } from "react-router-dom";
 import "../styles/one-club.css";
 
 const OneClub = () => {
-  const { getAClub, selectedClub, getCourts, courts, getReservationsOneClub } =
-    useContext(ClubsContext);
+  const {
+    getAClub,
+    selectedClub,
+    getCourts,
+    courts,
+    getReservationsOneClub,
+    error,
+    loading,
+  } = useContext(ClubsContext);
   const { id } = useParams();
 
   useEffect(() => {
@@ -15,12 +22,16 @@ const OneClub = () => {
   }, [id]);
 
   if (!selectedClub || !selectedClub.location) {
-    return <p>Loading club...</p>;
+    return loading.selectedClub;
   }
 
   return (
     <>
       <section className="oneclub">
+        {error.selectedClub && <p className="error">{error.selectedClub}</p>}
+        {loading.selectedClub && (
+          <p className="loading">Loading clubs data...</p>
+        )}
         <div className="oneclub__logo">
           <img
             src={`${selectedClub.logo_url}`}

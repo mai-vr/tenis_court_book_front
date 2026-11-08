@@ -15,11 +15,13 @@ export const Reservation = () => {
     getReservationsOneClub,
     dateInput,
     setDateInput,
+    error,
+    loading,
   } = useContext(ClubsContext);
 
   const [step, setStep] = useState("slots");
   const [selectedSlot, setSelectedSlot] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingComponent, setLoadingComponent] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [createdReservation, setCreatedReservation] = useState(null);
 
@@ -36,7 +38,7 @@ export const Reservation = () => {
   };
 
   const handleConfirmReservation = async (selectedCourt) => {
-    setLoading(true);
+    setLoadingComponent(true);
     setErrorMsg(null);
 
     try {
@@ -62,7 +64,7 @@ export const Reservation = () => {
 
       getReservationsOneClub(selectedClub.id);
     } catch (err) {
-      console.error("Detalle del error al reservar:", err);
+      console.error("Reservation details:", err);
 
       const errorPayload = err.response?.data || err;
       const message =
@@ -70,11 +72,11 @@ export const Reservation = () => {
         errorPayload.error ||
         errorPayload.message ||
         err.message ||
-        "Ocurrió un error al crear la reserva.";
+        "Could not make the reservation.";
 
       setErrorMsg(message);
     } finally {
-      setLoading(false);
+      setLoadingComponent(false);
     }
   };
 
@@ -105,7 +107,7 @@ export const Reservation = () => {
       {step === "form" && selectedSlot && (
         <ReservationForm
           selectedSlot={selectedSlot}
-          loading={loading}
+          loading={loadingComponent}
           onBack={() => setStep("slots")}
           onConfirm={handleConfirmReservation}
         />

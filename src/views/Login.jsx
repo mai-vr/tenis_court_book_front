@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/login.css";
 
 const Login = () => {
@@ -8,6 +8,7 @@ const Login = () => {
   const [isSuccess, setIsSuccess] = useState(null);
   const { handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +25,8 @@ const Login = () => {
       };
       console.log(dataInput);
       await handleLogin(dataInput);
-      navigate("/");
+      // navigate("/");
+      navigate(location.state?.from || "/", { replace: true });
     } catch (error) {
       console.log(error);
       setIsSuccess(false);

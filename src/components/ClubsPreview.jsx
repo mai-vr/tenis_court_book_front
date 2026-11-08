@@ -14,12 +14,14 @@ const ClubsPreview = () => {
     getCourts,
     courtsByClub,
     getReservationsOneClub,
+    error,
+    loading,
   } = useContext(ClubsContext);
   const navigate = useNavigate();
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-  const [error, setError] = useState(false);
+  const [errorComopnent, setErrorComponent] = useState(false);
 
   useEffect(() => {
     getClubs();
@@ -85,11 +87,11 @@ const ClubsPreview = () => {
       .split("T")[0];
 
     if (date < currentDate) {
-      setError(true);
+      setErrorComponent(true);
       return;
     }
 
-    setError(false);
+    setErrorComponent(false);
     setDateInput(date);
   };
 
@@ -128,9 +130,11 @@ const ClubsPreview = () => {
           ))}
         </select>
       </form>
-      {error && <p className="clubs__error">Something gone wrong</p>}
+      {loading.clubs && <p className="loading">Loading...</p>}
+      {error.clubs && <p className="error">{error.clubs}</p>}
+      {errorComopnent && <p className="clubs__error">Something gone wrong</p>}
 
-      {filteredClubs?.length > 0 ? (
+      {filteredClubs?.length > 0 &&
         filteredClubs.map((club) => (
           <div
             className="clubspreview__card"
@@ -154,10 +158,7 @@ const ClubsPreview = () => {
               Book
             </a>
           </div>
-        ))
-      ) : (
-        <p>No clubs found</p>
-      )}
+        ))}
     </section>
   );
 };
