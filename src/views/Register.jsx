@@ -5,9 +5,16 @@ import "../styles/register.css";
 import { ERRORS } from "../services/errorMessagges";
 
 const Register = () => {
-  const [userInput, setUserInput] = useState({});
-  const [isSuccess, setIsSuccess] = useState(null);
-  const [error, setError] = useState("");
+  const [userInput, setUserInput] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+  });
+
+  const [errorComponent, setErrorComponent] = useState("");
+  const [loadingComponent, setLoadingComponent] = useState(false);
   const { handleRegister } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +26,24 @@ const Register = () => {
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+    if (loadingComponent) return;
+    setErrorComponent("");
+    if (userInput.firstName.length < 2 || userInput.lastName.length < 2) {
+      setErrorComponent(ERRORS.nameLength);
+      return;
+    }
+
+    if (userInput.password.length < 4) {
+      setErrorComponent(ERRORS.passwordLength);
+      return;
+    }
+
+    if (userInput.password !== userInput.passwordConfirmation) {
+      setErrorComponent(ERRORS.passwordConfirmation);
+      return;
+    }
+    setLoadingComponent(true);
+
     try {
       const userDataInput = {
         first_name: userInput.firstName,
@@ -32,15 +57,9 @@ const Register = () => {
       navigate(location.state?.from || "/", { replace: true });
     } catch (error) {
       console.log(error);
-      setIsSuccess(false);
-      if (userInput.password !== userInput.passwordConfirmation) {
-        setError(ERRORS.passwordConfirmation);
-      } else if (
-        userInput.firstName.length < 2 ||
-        userInput.lastName.length < 2
-      ) {
-        setError(ERRORS.nameLength);
-      }
+      setErrorComponent(err.message || ERRORS.registerFailed);
+    } finally {
+      setLoadingComponent(true);
     }
   };
 
@@ -65,6 +84,8 @@ const Register = () => {
             type="text"
             name="firstName"
             placeholder="Enter your first name"
+            disabled={loadingComponent}
+            required
           />
           <label className="register__label" htmlFor="lastName">
             Last name
@@ -75,6 +96,8 @@ const Register = () => {
             type="text"
             name="lastName"
             placeholder="Enter your last name"
+            disabled={loadingComponent}
+            required
           />
           <label className="register__label" htmlFor="email">
             Email
@@ -85,6 +108,8 @@ const Register = () => {
             type="email"
             name="email"
             placeholder="Enter your email"
+            disabled={loadingComponent}
+            required
           />
           <label className="register__label" htmlFor="password">
             Password
@@ -95,6 +120,8 @@ const Register = () => {
             type="password"
             name="password"
             placeholder="Enter a password"
+            disabled={loadingComponent}
+            required
           />
           <label className="register__label" htmlFor="passwordConfirmation">
             Password confirmation
@@ -105,16 +132,21 @@ const Register = () => {
             type="password"
             name="passwordConfirmation"
             placeholder="Enter the password again"
+            disabled={loadingComponent}
+            required
           />
-          <button className="register__button">Sign in</button>
+          <button className="register__button" disabled={loadingComponent}>
+            {loadingComponent ? "Signing in" : "Sign in"}
+          </button>
         </form>
         <p className="register__switch">
-          <Link to="/login">Log in</Link>
+          <Link to="/login" state={location.state}>
+            Log in
+          </Link>
         </p>
-        {isSuccess === false && error && (
+        {errorComponent && (
           <div className="register__errors">
-            <p className="register__error">Some fields are incorrect</p>
-            <p className="register__error">{error}</p>
+            <p className="register__error">{errorComponent}</p>
           </div>
         )}
       </div>

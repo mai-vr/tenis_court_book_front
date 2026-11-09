@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { ClubsContext } from "../context/ClubsContext";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "../styles/one-club.css";
 
 const OneClub = () => {
@@ -18,8 +18,27 @@ const OneClub = () => {
   useEffect(() => {
     getAClub(id);
     getCourts(id);
-    getReservationsOneClub(id);
   }, [id]);
+
+  if (loading.selectedClub) {
+    return (
+      <div className="oneclub__error__view">
+        <p className="loading">Loading club data...</p>
+      </div>
+    );
+  }
+  if (error.selectedClub || !selectedClub || !selectedClub.location) {
+    return (
+      <div className="oneclub__error__view">
+        <p className="error">
+          {error.selectedClub || "Could not load club details."}
+        </p>
+        <Link to="/" className="oneclub__back__btn">
+          Back to clubs
+        </Link>
+      </div>
+    );
+  }
 
   if (!selectedClub || !selectedClub.location) {
     return loading.selectedClub;

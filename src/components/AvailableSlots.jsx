@@ -10,9 +10,13 @@ const AvailableSlots = ({ onSelectSlot }) => {
     reservationsByClub,
     getReservationsOneClub,
     dateInput,
+    loading,
+    error,
   } = useContext(ClubsContext);
-  const [notSlots, setNotSlots] = useState(false);
+  // const [notSlots, setNotSlots] = useState(false);
   const [slots, setSlots] = useState([]);
+  const loadingComponent = loading.courts || loading.reservations;
+  const errorComponent = error.courts || error.reservations;
 
   useEffect(() => {
     if (!selectedClub?.id) return;
@@ -67,7 +71,13 @@ const AvailableSlots = ({ onSelectSlot }) => {
     }
 
     const clubSlots = [];
-    const selectedDate = new Date(`${dateInput}T12:00:00`);
+    const selectedDate = new Date(`${dateInput}T00:00:00`);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const isToday = selectedDate.getTime() === today.getTime();
+
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
     const daysOfWeek = [
       "sunday",
       "monday",
@@ -111,6 +121,10 @@ const AvailableSlots = ({ onSelectSlot }) => {
     while (current + 60 <= end) {
       const startTime = formatMinutes(current);
       const endTime = formatMinutes(current + 60);
+      if (isToday && current <= currentMinutes) {
+        current += 60;
+        continue;
+      }
 
       const availableCourts = clubsCourts
         .filter((c) => c.status === "available")
@@ -152,6 +166,22 @@ const AvailableSlots = ({ onSelectSlot }) => {
     }
   };
 
+  if (loadingComponent) {
+    return (
+      <div className="slots slots__loading">
+        <p className="loading slots__message">Loading available slots...</p>
+      </div>
+    );
+  }
+
+  if (errorComponent) {
+    return (
+      <div className="slots slots__error">
+        <p className="error error__banner">{errorComponent}</p>
+      </div>
+    );
+  }
+
   return (
     <section className="slots">
       {slots.length > 0 ? (
@@ -162,23 +192,24 @@ const AvailableSlots = ({ onSelectSlot }) => {
             </p>
 
             <p className="slots__text">
-              Canchas disponibles: {slot.available_courts.length}
+              Available courts: {slot.available_courts.length}
             </p>
-
-            <button
-              type="button"
-              className="slots__btn"
-              disabled={!slot.available}
-              onClick={() => handleClickSlot(slot)}
-            >
-              Reservar
-            </button>
+            {slot.available_courts.length > 0 ? (
+              <button
+                type="button"
+                className="slots__btn"
+                disabled={!slot.available}
+                onClick={() => handleClickSlot(slot)}
+              >
+                Book
+              </button>
+            ) : (
+              <p className="slots__nocourts">No courts available</p>
+            )}
           </div>
         ))
       ) : (
-        <p className="slots__message">
-          No hay horarios disponibles para esta fecha.
-        </p>
+        <p className="slots__message">There are not schedule for this date.</p>
       )}
     </section>
   );

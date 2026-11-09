@@ -22,7 +22,7 @@ export const Reservation = () => {
   const [step, setStep] = useState("slots");
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [loadingComponent, setLoadingComponent] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [errorComponent, setErrorComponent] = useState(null);
   const [createdReservation, setCreatedReservation] = useState(null);
 
   useEffect(() => {
@@ -31,15 +31,21 @@ export const Reservation = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (error.selectedClub) {
+      setErrorComponent(error.selectedClub);
+    }
+  }, [error.selectedClub]);
+
   const handleSelectSlot = (slot) => {
     setSelectedSlot(slot);
     setStep("form");
-    setErrorMsg(null);
+    setErrorComponent(null);
   };
 
   const handleConfirmReservation = async (selectedCourt) => {
     setLoadingComponent(true);
-    setErrorMsg(null);
+    setErrorComponent(null);
 
     try {
       const reservationData = {
@@ -74,14 +80,25 @@ export const Reservation = () => {
         err.message ||
         "Could not make the reservation.";
 
-      setErrorMsg(message);
+      setErrorComponent(message);
     } finally {
       setLoadingComponent(false);
     }
   };
 
+  if (loading.selectedClub) {
+    return (
+      <div className="reservation reservation__loading">
+        <p className="loading">Loading club details...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="reservation">
+      {errorComponent && (
+        <div className="reservation__errorbanner">{errorComponent}</div>
+      )}
       {step === "slots" && (
         <>
           <h1 className="reservation__title">Book your Court</h1>
@@ -95,12 +112,11 @@ export const Reservation = () => {
               type="date"
               value={dateInput || ""}
               onChange={(e) => setDateInput(e.target.value)}
+              disabled={loadingComponent}
             />
           </div>
         </>
       )}
-
-      {errorMsg && <div className="error-banner">{errorMsg}</div>}
 
       {step === "slots" && <AvailableSlots onSelectSlot={handleSelectSlot} />}
 
@@ -121,6 +137,7 @@ export const Reservation = () => {
             setStep("slots");
             setSelectedSlot(null);
             setCreatedReservation(null);
+            setErrorComponent(null);
           }}
         />
       )}

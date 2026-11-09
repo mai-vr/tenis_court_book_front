@@ -2,10 +2,16 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/login.css";
+import { ERRORS } from "../services/errorMessagges";
 
 const Login = () => {
-  const [userInput, setUserInput] = useState({});
-  const [isSuccess, setIsSuccess] = useState(null);
+  const [userInput, setUserInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [loadingComponent, setLoadingComponent] = useState(false);
+  const [errorComopnent, setErrorComponent] = useState("");
   const { handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,6 +23,10 @@ const Login = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    if (loadingComponent) return;
+    setErrorComponent("");
+    setLoadingComponent(true);
     console.log(userInput);
     try {
       const dataInput = {
@@ -29,7 +39,9 @@ const Login = () => {
       navigate(location.state?.from || "/", { replace: true });
     } catch (error) {
       console.log(error);
-      setIsSuccess(false);
+      setErrorComponent(error.message || ERRORS.loginFailed);
+    } finally {
+      setLoadingComponent(false);
     }
   };
 
@@ -54,6 +66,8 @@ const Login = () => {
             className="login__input"
             onChange={handleLoginChange}
             placeholder="Enter a valid email"
+            disabled={loadingComponent}
+            required
           />
           <label htmlFor="password" className="login__label">
             Password
@@ -64,15 +78,19 @@ const Login = () => {
             className="login__input"
             onChange={handleLoginChange}
             placeholder="Enter your password"
+            disabled={loadingComponent}
+            required
           />
-          <button className="login__button">Log in</button>
+          <button className="login__button" disabled={loadingComponent}>
+            {loadingComponent ? "Loggin in" : "Log in"}
+          </button>
         </form>
         <p className="login__switch">
-          <Link to="/register">Register</Link>
+          <Link to="/register" state={location.state}>
+            Register
+          </Link>
         </p>
-        {isSuccess === false && (
-          <p className="login__error">Could not log in</p>
-        )}
+        {errorComopnent && <p className="login__error">{errorComopnent}</p>}
       </div>
     </section>
   );

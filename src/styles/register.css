@@ -76,6 +76,11 @@
   box-shadow: 0 0 0 3px rgba(216, 230, 76, 0.6);
 }
 
+.register__input:disabled {
+  background-color: var(--font-color-muted);
+  cursor: not-allowed;
+}
+
 .register__button {
   margin-top: 1.5rem;
   height: 3.5rem;
@@ -107,6 +112,12 @@
 
 .register__button:active {
   transform: translateY(1px);
+}
+
+.register__button:disabled {
+  background-color: var(--font-color-muted);
+  color: var(--primary-color);
+  cursor: not-allowed;
 }
 
 .register__error {

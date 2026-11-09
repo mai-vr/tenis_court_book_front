@@ -23,7 +23,7 @@ const ReservationForm = ({ selectedSlot, onBack, onConfirm, loading }) => {
             </button>
           </div>
         ))}
-        {loading && <p>Loading...</p>}
+        {loading && <p className="loading">Loading...</p>}
       </div>
     </section>
   );

@@ -8,6 +8,8 @@ const ERRORS = {
   getClubs: "There are not avaible clubs right now",
   getCourts: "There are not available courts right now",
   wrongDate: "Date can´t be in the past",
+  registerFailed: "Could not complete the registration. Please try again.",
+  loginFailed: "Invalid email or password. Please try again.",
 };
 
 export { ERRORS };

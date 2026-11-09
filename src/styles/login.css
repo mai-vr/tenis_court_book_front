@@ -78,6 +78,11 @@
   box-shadow: 0 0 0 3px rgba(216, 230, 76, 0.6);
 }
 
+.login__input:disabled {
+  background-color: var(--font-color-muted);
+  cursor: not-allowed;
+}
+
 .login__button {
   margin-top: 1.5rem;
   height: 3.5rem;
@@ -109,6 +114,12 @@
 
 .login__button:active {
   transform: translateY(1px);
+}
+
+.login__button:disabled {
+  background-color: var(--font-color-muted);
+  color: var(--primary-color);
+  cursor: not-allowed;
 }
 
 .login__error {

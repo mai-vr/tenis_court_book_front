@@ -80,6 +80,14 @@
   background-color: var(--accent-color);
 }
 
+.slots__nocourts {
+  padding: 0.25rem 1rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  background-color: var(--surface-sunken);
+  color: var(--danger);
+}
+
 /* reservation form. */
 .reservationform {
   width: 100%;

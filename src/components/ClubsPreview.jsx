@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ClubsContext } from "../context/ClubsContext";
 import "../styles/clubs-preview.css";
 import { useNavigate } from "react-router-dom";
+import { ERRORS } from "../services/errorMessagges";
 
 const ClubsPreview = () => {
   const {
@@ -21,7 +22,10 @@ const ClubsPreview = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-  const [errorComopnent, setErrorComponent] = useState(false);
+  const [dateError, setDateError] = useState(null);
+
+  const loadingComponent = loading.clubs;
+  const errorComponent = dateError || error.clubs;
 
   useEffect(() => {
     getClubs();
@@ -87,11 +91,11 @@ const ClubsPreview = () => {
       .split("T")[0];
 
     if (date < currentDate) {
-      setErrorComponent(true);
+      setDateError(ERRORS.wrongDate);
       return;
     }
 
-    setErrorComponent(false);
+    setDateError(null);
     setDateInput(date);
   };
 
@@ -107,6 +111,7 @@ const ClubsPreview = () => {
           placeholder="Enter a date"
           value={dateInput}
           onChange={handleChangeDate}
+          disabled={loadingComponent}
         />
         <input
           type="text"
@@ -114,12 +119,14 @@ const ClubsPreview = () => {
           placeholder="Search by club name"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
+          disabled={loadingComponent}
         />
 
         <select
           name="city"
           value={selectedCity}
           onChange={(e) => setSelectedCity(e.target.value)}
+          disabled={loadingComponent}
         >
           <option value="">All cities</option>
 
@@ -130,11 +137,18 @@ const ClubsPreview = () => {
           ))}
         </select>
       </form>
-      {loading.clubs && <p className="loading">Loading...</p>}
-      {error.clubs && <p className="error">{error.clubs}</p>}
-      {errorComopnent && <p className="clubs__error">Something gone wrong</p>}
+      {loadingComponent && <p className="loading">Loading clubs...</p>}
 
-      {filteredClubs?.length > 0 &&
+      {errorComponent && <p className="error clubs__error">{errorComponent}</p>}
+
+      {!loadingComponent && filteredClubs?.length === 0 && !errorComponent && (
+        <p className="clubspreview__empty">
+          No clubs found matching your criteria.
+        </p>
+      )}
+
+      {!loadingComponent &&
+        filteredClubs?.length > 0 &&
         filteredClubs.map((club) => (
           <div
             className="clubspreview__card"

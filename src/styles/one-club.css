@@ -166,6 +166,41 @@
   box-shadow: 0 0 0 1px var(--line);
 }
 
+.oneclub__error__view {
+  width: 100%;
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: auto;
+}
+
+.oneclub__back__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-bottom: 3.5rem;
+  padding: 0.5rem 2.5rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  color: var(--surface);
+  background-color: var(--primary-color);
+  border: 1.5px solid var(--primary-color);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.oneclub__back__btn:hover {
+  color: var(--primary-color);
+  background-color: var(--surface);
+}
+
 @media (max-width: 800px) {
   .oneclub {
     grid-template-columns: 1fr;
