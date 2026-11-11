@@ -126,6 +126,7 @@
   .home {
     justify-content: flex-start;
     padding-top: 4rem;
+    /* min-height: 80vh; */
   }
 
   .home__subtitle {

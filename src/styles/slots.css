@@ -294,3 +294,12 @@
   color: var(--font-color-light);
   background-color: var(--primary-color);
 }
+
+@media (max-width: 600px) {
+  .reservation {
+    padding: 1rem;
+  }
+  .reservationform {
+    padding: 1rem;
+  }
+}

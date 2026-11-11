@@ -35,8 +35,11 @@ const Login = () => {
       };
       console.log(dataInput);
       await handleLogin(dataInput);
-      // navigate("/");
-      navigate(location.state?.from || "/", { replace: true });
+      const returnTo = location.state?.from;
+      const destination = returnTo
+        ? `${returnTo.pathname || "/"}${returnTo.search || ""}${returnTo.hash || ""}`
+        : "/";
+      navigate(destination, { replace: true });
     } catch (error) {
       console.log(error);
       setErrorComponent(error.message || ERRORS.loginFailed);

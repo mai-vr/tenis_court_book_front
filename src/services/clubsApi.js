@@ -1,6 +1,6 @@
 import { authenticatedFetch } from "./api.js";
+import { API_URL } from "./apiConfig.js";
 
-const API_URL = "https://tenis-court-book.onrender.com/api/v1";
 const TOKEN = "authToken";
 
 const getAllClubs = async () => {

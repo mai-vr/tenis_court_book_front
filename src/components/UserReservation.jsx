@@ -61,7 +61,8 @@ const UserReservation = () => {
               </p>
               <p>Date: {r.current_date}</p>
               <p>
-                From: {r.start_time} - Until {r.end_time}
+                From: {new Date(r.start_time).toLocaleTimeString()} - To:{" "}
+                {new Date(r.end_time).toLocaleTimeString()}
               </p>
               <p className="user__reservation__status">Status: {r.status}</p>
               <p className="user__reservation__price">
