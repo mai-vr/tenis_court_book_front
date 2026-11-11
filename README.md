@@ -161,4 +161,4 @@ npx cypress run --spec cypress/e2e/auth.cy.js
 ## Deploy
 
 - Back-end/API: `https://tenis-court-book.onrender.com`; el prefijo de API es `https://tenis-court-book.onrender.com/api/v1`.
-- Front-end: En desarrollo se sirve desde `http://127.0.0.1:5173/`.
+- Front-end: En desarrollo se sirve desde `http://127.0.0.1:5173/` y en producción desde: `https://tenis-court-book-front.onrender.com/clubs`.
