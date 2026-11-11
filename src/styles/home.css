@@ -7,25 +7,66 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 8vw, 8rem);
+  align-items: center;
+  padding: 4rem 5rem;
   color: var(--font-color-light);
   background-color: var(--primary-color);
+  position: relative;
+  isolation: isolate;
+}
+
+.home__bg__circle,
+.home__bg__circle2 {
+  position: absolute;
+  z-index: -1;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(3rem);
+  pointer-events: none;
+}
+
+.home__bg__circle {
+  width: clamp(18rem, 55vw, 42rem);
+  top: -15%;
+  left: -10%;
+  background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+  opacity: 0.5;
+}
+
+.home__bg__circle2 {
+  width: clamp(16rem, 50vw, 38rem);
+  bottom: -15%;
+  right: -10%;
+  background: radial-gradient(
+    circle,
+    var(--secondary-color) 0%,
+    transparent 70%
+  );
+  opacity: 0.6;
 }
 
 .home__title {
-  margin-bottom: 1rem;
-  font-size: clamp(5rem, 12vw, 13rem);
+  max-width: 55rem;
+  margin-bottom: 3rem;
+  font-size: 7.5rem;
   line-height: 0.9;
+  text-align: center;
   letter-spacing: -0.01em;
   color: var(--font-color-light);
 }
 
+.home__title__accent {
+  color: var(--accent-color);
+  font-style: italic;
+}
+
 .home__subtitle {
-  max-width: 28rem;
+  /* max-width: 28rem; */
   margin-bottom: 3rem;
   font-size: 1.5rem;
   line-height: 1.35;
-  color: var(--surface-sunken);
+  text-align: center;
+  color: var(--font-color-light);
 }
 
 .home__search {
@@ -48,7 +89,7 @@
   grid-column: 1 / -1;
   margin-bottom: 0.6rem;
   font-size: 0.95rem;
-  color: rgba(246, 245, 239, 0.78);
+  color: var(--font-color-light);
 }
 
 .home__input {
@@ -103,14 +144,15 @@
 .home__button:disabled,
 .home__button:disabled:hover,
 .home__button:disabled:active {
-  color: rgba(246, 245, 239, 0.55);
-  background-color: rgba(246, 245, 239, 0.16);
+  color: var(--accent-color);
+  background-color: var(--primary-color);
   cursor: not-allowed;
   transform: none;
 }
 
 .home__button:hover {
-  background-color: var(--surface);
+  background-color: var(--primary-dark);
+  color: var(--accent-color);
 }
 
 .home__button:focus-visible {
@@ -125,8 +167,12 @@
 @media (max-width: 600px) {
   .home {
     justify-content: flex-start;
-    padding-top: 4rem;
-    /* min-height: 80vh; */
+    padding: 2.5rem 1rem;
+  }
+
+  .home__title {
+    max-width: 100%;
+    font-size: 5rem;
   }
 
   .home__subtitle {
@@ -142,11 +188,5 @@
   .home__input,
   .home__button {
     border-radius: 0.5rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home__button {
-    transition: none;
   }
 }

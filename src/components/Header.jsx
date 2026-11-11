@@ -23,9 +23,7 @@ const Header = () => {
             <h3 className="header__title">Tennis courts</h3>
           </a>
         </div>
-        <a href="/" className="header__nav__link">
-          Home
-        </a>
+
         <a href="/clubs" className="header__nav__link">
           Clubs
         </a>

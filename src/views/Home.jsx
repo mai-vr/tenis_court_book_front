@@ -18,11 +18,11 @@ const Home = () => {
       .split("T")[0];
 
     if (date < currentDate) {
-      setError(ERRORS.wrongDate);
+      setErrorComponent(ERRORS.wrongDate);
       return;
     }
 
-    // setError(false);
+    setErrorComponent(null);
     setDateInput(date);
   };
 
@@ -34,8 +34,15 @@ const Home = () => {
   return (
     <>
       <section className="home">
-        <h1 className="home__title">Tenis courts</h1>
-        <p className="home__subtitle">Today is a nice day to play</p>
+        <div className="home__bg__circle"></div>
+        <div className="home__bg__circle2"></div>
+        <h1 className="home__title">
+          Book a tennis court and{" "}
+          <span className="home__title__accent">start playing</span>{" "}
+        </h1>
+        <p className="home__subtitle">
+          Today is a nice day to play, search for an available court
+        </p>
         <div className="home__search">
           <form className="home__form" onSubmit={handleFormSubmit}>
             <label htmlFor="date" className="home__label">
