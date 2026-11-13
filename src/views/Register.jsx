@@ -57,7 +57,7 @@ const Register = () => {
       navigate(location.state?.from || "/", { replace: true });
     } catch (error) {
       console.log(error);
-      setErrorComponent(err.message || ERRORS.registerFailed);
+      setErrorComponent(error.message || ERRORS.registerFailed);
     } finally {
       setLoadingComponent(true);
     }
