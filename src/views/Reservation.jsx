@@ -43,13 +43,13 @@ export const Reservation = () => {
     setErrorComponent(null);
   };
 
-  const handleConfirmReservation = async (selectedCourt) => {
+  const handleConfirmReservation = async (selectedCourt, paymentMethod) => {
     setLoadingComponent(true);
     setErrorComponent(null);
 
     try {
       const reservationData = {
-        payment_method: "cash",
+        payment_method: paymentMethod,
         reservation: {
           court_id: Number(selectedCourt.id),
           current_date: selectedSlot.date,

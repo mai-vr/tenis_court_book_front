@@ -152,14 +152,22 @@ const ClubsProvider = ({ children }) => {
       await deleteReservation(clubId, reservationId);
 
       setUserReservation((prev) =>
-        prev.filter((reservation) => reservation.id !== reservationId),
+        prev.map((reservation) =>
+          reservation.id === reservationId
+            ? { ...reservation, status: "cancelled" }
+            : reservation,
+        ),
       );
+
+      return true;
     } catch (error) {
       console.log(error);
       setError((prev) => ({
         ...prev,
         deletingReservation: ERRORS.deleteReservation,
       }));
+
+      return false;
     } finally {
       setLoading((prev) => ({ ...prev, deletingReservation: false }));
     }

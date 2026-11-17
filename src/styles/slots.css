@@ -194,6 +194,22 @@
   margin-top: auto;
 }
 
+.payment__options {
+  padding: 0 1.25rem;
+  font-family: inherit;
+  font-size: 1.1rem;
+  color: var(--font-color);
+  background-color: var(--surface);
+  border: 1.5px solid var(--secondary-color);
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+.payment__options:focus,
+.payment__options:active {
+  border: 2px solid var(--accent-color);
+}
+
 /* reservation success. */
 .reservationsuccess {
   width: 100%;

@@ -14,6 +14,13 @@ const UserReservation = () => {
 
   useEffect(() => {
     getUserReservation();
+
+    const interval = setInterval(() => {
+      // Executes a function repeatedly at a specified interval.
+      getUserReservation();
+    }, 15000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleClickCancel = (clubId, reservationId) => {
@@ -22,8 +29,12 @@ const UserReservation = () => {
 
   const handleConfirmCancel = async () => {
     const { clubId, reservationId } = reservationToCancel;
-    await deleteUserReservation(clubId, reservationId);
-    setReservationToCancel(null);
+
+    const success = await deleteUserReservation(clubId, reservationId);
+
+    if (success) {
+      setReservationToCancel(null);
+    }
   };
 
   const handleCloseModal = () => {
@@ -47,7 +58,11 @@ const UserReservation = () => {
             You don't have any reservations yet.
           </p>
         )}
-
+      {error.deletingReservation && (
+        <p className="error user__reservation__message user__reservation__message--error">
+          {error.deletingReservation}
+        </p>
+      )}
       <div className="user__reservations__list">
         {userReservation.map((r) => (
           <div className="user__reservation__card" key={r.id}>
@@ -70,12 +85,16 @@ const UserReservation = () => {
               </p>
             </div>
             <div className="user__reservation__actions">
-              <button
-                onClick={() => handleClickCancel(r.court.club.id, r.id)}
-                className="user__reservation__btn"
-              >
-                Delete reservation
-              </button>
+              {r.status !== "cancelled" &&
+                new Date(`${r.current_date}T00:00:00`) >=
+                  new Date(new Date().toDateString()) && (
+                  <button
+                    onClick={() => handleClickCancel(r.court.club.id, r.id)}
+                    className="user__reservation__btn"
+                  >
+                    Cancel reservation
+                  </button>
+                )}
             </div>
           </div>
         ))}

@@ -66,7 +66,7 @@ const AvailableSlots = ({ onSelectSlot }) => {
 
     if (!schedules?.length || !dateInput) {
       setSlots([]);
-      setNotSlots(true);
+      // setNotSlots(true);
       return;
     }
 
@@ -94,7 +94,7 @@ const AvailableSlots = ({ onSelectSlot }) => {
 
     if (!selectedSchedule) {
       setSlots([]);
-      setNotSlots(true);
+      // setNotSlots(true);
       return;
     }
 
