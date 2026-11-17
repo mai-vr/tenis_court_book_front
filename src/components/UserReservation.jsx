@@ -79,7 +79,21 @@ const UserReservation = () => {
                 From: {new Date(r.start_time).toLocaleTimeString()} - To:{" "}
                 {new Date(r.end_time).toLocaleTimeString()}
               </p>
-              <p className="user__reservation__status">Status: {r.status}</p>
+
+              {r.status === "cancelled" ? (
+                <p className="user__reservation__status cancelled">
+                  Status: Cancelled
+                </p>
+              ) : r.status === "pending" ? (
+                <p className="user__reservation__status pending">
+                  {" "}
+                  Status: Pending
+                </p>
+              ) : (
+                <p className="user__reservation__status confirmed">
+                  Status: Confirmed
+                </p>
+              )}
               <p className="user__reservation__price">
                 Total: ${r.payment.total}
               </p>

@@ -94,27 +94,26 @@
 }
 
 .user__reservation__status {
-  display: inline-block;
   padding: 0.1rem 0.6rem;
   border-radius: 20rem;
-  background: var(--surface-sunken);
-  color: var(--font-color);
-  font-size: 0.95rem;
-  font-weight: 600;
+  /* background: var(--surface-sunken); */
+  color: var(--font-color-light);
+  font-size: 1rem;
+  font-weight: 500;
   text-transform: capitalize;
 }
 
-.user__reservation__status--confirmed,
-.user__reservation__status--paid,
-.user__reservation__status--active {
-  background: #e3f1e8;
-  color: var(--success);
+.cancelled {
+  background-color: var(--danger);
 }
 
-.user__reservation__status--cancelled,
-.user__reservation__status--canceled {
-  background: #fbeceb;
-  color: var(--danger);
+.confirmed {
+  background-color: var(--success);
+}
+
+.pending {
+  color: var(--font-color);
+  background-color: var(--surface-sunken);
 }
 
 .user__reservation__btn {
