@@ -11,16 +11,21 @@ const UserReservation = () => {
   } = useContext(ClubsContext);
 
   const [reservationToCancel, setReservationToCancel] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null);
 
   useEffect(() => {
     getUserReservation();
+    const initialTime = setTimeout(() => setCurrentTime(Date.now()), 0);
 
     const interval = setInterval(() => {
-      // Executes a function repeatedly at a specified interval.
       getUserReservation();
+      setCurrentTime(Date.now());
     }, 15000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(initialTime);
+      clearInterval(interval);
+    };
   }, []);
 
   const handleClickCancel = (clubId, reservationId) => {
@@ -51,6 +56,24 @@ const UserReservation = () => {
     }
 
     return value.substring(0, 5);
+  };
+
+  const canCancelReservation = (reservation) => {
+    const [year, month, day] = String(reservation.current_date)
+      .slice(0, 10)
+      .split("-")
+      .map(Number);
+    const [hours, minutes] = formatTime(reservation.start_time)
+      .split(":")
+      .map(Number);
+    const startDate = new Date(year, month - 1, day, hours, minutes);
+    const hoursUntilStart = (startDate.getTime() - currentTime) / 3600000;
+
+    return (
+      currentTime !== null &&
+      Number.isFinite(hoursUntilStart) &&
+      hoursUntilStart >= 24
+    );
   };
 
   return (
@@ -110,16 +133,14 @@ const UserReservation = () => {
               </p>
             </div>
             <div className="user__reservation__actions">
-              {r.status !== "cancelled" &&
-                new Date(`${r.current_date}T00:00:00`) >=
-                  new Date(new Date().toDateString()) && (
-                  <button
-                    onClick={() => handleClickCancel(r.court.club.id, r.id)}
-                    className="user__reservation__btn"
-                  >
-                    Cancel reservation
-                  </button>
-                )}
+              {r.status !== "cancelled" && canCancelReservation(r) && (
+                <button
+                  onClick={() => handleClickCancel(r.court.club.id, r.id)}
+                  className="user__reservation__btn"
+                >
+                  Cancel reservation
+                </button>
+              )}
             </div>
           </div>
         ))}
