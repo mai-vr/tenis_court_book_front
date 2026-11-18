@@ -41,6 +41,18 @@ const UserReservation = () => {
     setReservationToCancel(null);
   };
 
+  const formatTime = (time) => {
+    if (!time) return "";
+
+    const value = String(time);
+
+    if (value.includes("T")) {
+      return value.split("T")[1].substring(0, 5);
+    }
+
+    return value.substring(0, 5);
+  };
+
   return (
     <section className="user__reservation">
       {loading.userReservations && (
@@ -76,8 +88,7 @@ const UserReservation = () => {
               </p>
               <p>Date: {r.current_date}</p>
               <p>
-                From: {new Date(r.start_time).toLocaleTimeString()} - To:{" "}
-                {new Date(r.end_time).toLocaleTimeString()}
+                From: {formatTime(r.start_time)} - To: {formatTime(r.end_time)}
               </p>
 
               {r.status === "cancelled" ? (
